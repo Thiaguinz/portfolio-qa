@@ -1,0 +1,86 @@
+# Generate a markdown file containing the Sprint details for the user's portfolio
+markdown_content = """# 🎯 Portfólio de QA: Projeto de Cadastro e Login
+
+## 📝 Resumo do Projeto e da Sprint
+**Objetivo:** Planejar e executar a garantia de qualidade (QA) para a nova funcionalidade de cadastro de usuários, abrangendo desde a análise de requisitos até o reporte de bugs.
+**Ferramentas Utilizadas:** Jira Software, Trello, Metodologia Ágil (Scrum/Kanban).
+**Papel:** Analista de QA
+
+---
+
+## 📖 1. Análise de Requisitos (User Story)
+
+**Ticket:** `SCRUM-15`
+**Título:** Como um cliente, quero me cadastrar no site para utilizar a plataforma da empresa.
+
+**Critérios de Aceite Analisados:**
+* O formulário deve conter os campos: Nome de Usuário, E-mail, Senha e Confirmar Senha.
+* O sistema deve conter botões visíveis como "Cadastrar" e "Voltar".
+* Os valores de "Senha" e "Confirmar Senha" devem ser idênticos. Caso contrário, bloquear cadastro e exibir erro.
+* O campo "E-mail" exige validação da presença de `@` e `.com`. Se ausentes, bloquear cadastro e exibir erro.
+* Em caso de sucesso, redirecionar para a página inicial.
+
+**Tarefas de Desenvolvimento (Acompanhadas):**
+* `SCRUM-16`: Desenvolver o esqueleto do site (HTML).
+* `SCRUM-17`: Estilizar o site (CSS).
+
+---
+
+## 🧪 2. Planejamento de Testes
+
+**Ticket:** `SCRUM-18`
+**Título:** [Testes] Validar cenários de cadastro de usuário
+**Tipo:** Issue de Teste (Vinculada à SCRUM-15)
+
+### 🟢 Cenário 1: Cadastro com sucesso (Caminho Feliz)
+* **Objetivo:** Testar se o sistema funciona quando o usuário insere todos os dados corretamente.
+* **Passos de Execução:**
+  1. Acessar a página de cadastro.
+  2. Preencher os dados válidos, e-mail contendo `@` e `.com`.
+  3. Preencher senhas iguais.
+  4. Clicar em "Cadastrar".
+* **Resultado Esperado:** O usuário é redirecionado para a página inicial da empresa.
+
+### 🔴 Cenário 2: Senhas divergentes (Fluxo de Exceção)
+* **Objetivo:** Testar a barreira de segurança quando as senhas não coincidem.
+* **Passos de Execução:**
+  1. Acessar a página de cadastro.
+  2. Digitar senhas diferentes nos campos "Senha" e "Confirmar Senha".
+  3. Clicar em "Cadastrar".
+* **Resultado Esperado:** O sistema exibe uma mensagem de erro e impede o cadastro.
+
+---
+
+## 🐞 3. Execução e Reporte de Bugs
+
+**Ticket:** `SCRUM-19`
+**Título:** Cadastro sendo realizado com e-mail inválido (sem ".com")
+**Severidade:** Alta | **Prioridade:** Média
+
+**Descrição do Defeito:**
+Ao preencher todos os campos do site corretamente, com exceção do campo "E-mail" (faltando a validação do sufixo `.com`), o usuário é cadastrado e redirecionado para a página inicial, burlando os critérios de aceite.
+
+**Passos para Reproduzir:**
+1. Preencher todos os campos corretamente (nome, senhas iguais).
+2. No campo E-mail, preencher apenas com o caractere `@` (exemplo: `usuario@email`).
+3. Clicar no botão de cadastro.
+
+**Resultado Esperado:**
+Exibir uma mensagem de erro alertando sobre o e-mail inválido e bloquear o cadastro.
+
+**Resultado Obtido:**
+O usuário foi cadastrado mesmo com o e-mail inválido e redirecionado para o site da empresa.
+
+**Justificativa de Risco (Severidade Alta):**
+Isso não impede o usuário de usar a plataforma imediatamente, mas ao esquecer a senha, a conta será irrecuperável. Além disso, impede o envio de recibos e atualizações pela empresa.
+
+**🔄 Simulação de Reteste:**
+* **Status:** Falhou Parcialmente ❌
+* **Nota do QA:** O sistema agora identifica a ausência do `@` e bloqueia o cadastro, mas o efeito colateral persistiu: o sistema ainda aceita o cadastro sem o sufixo `.com`, indo contra os critérios da Story original. Bug retornado para a equipe de desenvolvimento.
+"""
+
+file_path = "/tmp/portfolio_qa_sprint.md"
+with open(file_path, "w", encoding="utf-8") as f:
+    f.write(markdown_content)
+
+print(f"Markdown file created at: {file_path}")
